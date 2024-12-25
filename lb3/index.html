@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розрахунок середнього стажу</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+        .employee-input {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Розрахунок середнього стажу роботи</h2>
+    <div id="employee-form">
+        <!-- Поля для 5 співробітників -->
+        <div class="employee-input">
+            <label>Співробітник 1</label>
+            <input type="text" placeholder="Прізвище" id="name1">
+            <input type="date" id="date1">
+        </div>
+        <div class="employee-input">
+            <label>Співробітник 2</label>
+            <input type="text" placeholder="Прізвище" id="name2">
+            <input type="date" id="date2">
+        </div>
+        <div class="employee-input">
+            <label>Співробітник 3</label>
+            <input type="text" placeholder="Прізвище" id="name3">
+            <input type="date" id="date3">
+        </div>
+        <div class="employee-input">
+            <label>Співробітник 4</label>
+            <input type="text" placeholder="Прізвище" id="name4">
+            <input type="date" id="date4">
+        </div>
+        <div class="employee-input">
+            <label>Співробітник 5</label>
+            <input type="text" placeholder="Прізвище" id="name5">
+            <input type="date" id="date5">
+        </div>
+    </div>
+    <button onclick="calculateAverageExperience()">Розрахувати</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateAverageExperience() {
+        let totalYears = 0;
+        let currentDate = new Date();
+        let count = 0;
+
+        for (let i = 1; i <= 5; i++) {
+            let dateInput = document.getElementById(`date${i}`).value;
+
+            if (dateInput) {
+                let hireDate = new Date(dateInput);
+                let experience = currentDate.getFullYear() - hireDate.getFullYear();
+
+                if (
+                    currentDate.getMonth() < hireDate.getMonth() ||
+                    (currentDate.getMonth() === hireDate.getMonth() && currentDate.getDate() < hireDate.getDate())
+                ) {
+                    experience--;
+                }
+
+                totalYears += experience;
+                count++;
+            }
+        }
+
+        let averageExperience = count > 0 ? Math.floor(totalYears / count) : 0;
+
+        document.getElementById('result').textContent =
+            `Середній стаж роботи: ${averageExperience} років`;
+    }
+</script>
+</body>
+</html>
